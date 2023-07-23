@@ -1,0 +1,1390 @@
+var inputDivInitialLength_qna = 30;
+var questionNo = 1;
+var currentStageIdEdit ='';
+var currentIntent = '';
+var propTypeFilled=0;
+var budgetFilled=0;
+var currentPropType = '';
+
+
+function setPropTypeFilled(currentTy){
+	propTypeFilled = 1;
+	currentPropType = currentTy;
+}
+function getPropTypeFilled(){
+	return propTypeFilled;
+}
+
+function setBudgetFilled(){
+	budgetFilled = 1;
+}
+function getBudgetFilled(){
+	return budgetFilled;
+}
+
+function isLocationFilled(){
+	return $("#autoSuggestInputDivqna_keyword").children().hasClass('localityKeywordParent');
+}
+
+
+function isBhkFilled(){
+	return $(".contQNA__prop__bhk").children().hasClass('selected');
+}
+
+function removeBlurIfRequirementCompleted(){
+	if( isLocationFilled() && getBudgetFilled() &&  getPropTypeFilled() ) {
+		var ty = "" +currentPropType;
+		if((ty.indexOf('10002') != -1 || ty.indexOf('10003') != -1 || ty.indexOf('10021') != -1 || ty.indexOf('10022') != -1 || ty.indexOf('10001') != -1 || 
+				ty.indexOf('10017') != -1) ){//case where bhk is shown
+			if(isBhkFilled()){//if bhk is shown then checking if it is filled or not 
+				$("#updateButton").parent().removeClass('na');
+			}else if(!$("#updateButton").parent().hasClass('na')){
+				$("#updateButton").parent().addClass('na');
+			}
+		}else{ // case where bhk is hidden. Hnece no condition check for bhk
+			$("#updateButton").parent().removeClass('na');
+		}
+		
+	}else{
+		
+	} 
+}
+
+function removeBlurFromAllEscapeButtons(){
+	if($("#stageEditTop35937").length != 0){
+		$("#stageEditTop35937").parent().removeClass('na');
+	}
+	if($("#stageEditTop35932").length != 0){
+		$("#stageEditTop35932").parent().removeClass('na');
+	}
+	if($("#stageEditTop35936").length != 0){
+		$("#stageEditTop35936").parent().removeClass('na');
+	}
+	if($("#backButton").length != 0){
+		$("#backButton").parent().removeClass('na');
+	}
+	if($("#cancelButton").length != 0){
+		$("#cancelButton").parent().removeClass('na');
+	}
+}
+
+function addBlurInAllEscapeButtons(){
+	if($("#stageEditTop35937").length != 0){
+		$("#stageEditTop35937").parent().addClass('na');
+	}
+	if($("#stageEditTop35932").length != 0){
+		$("#stageEditTop35932").parent().addClass('na');
+	}
+	if($("#stageEditTop35936").length != 0){
+		$("#stageEditTop35936").parent().addClass('na');
+	}
+	if($("#backButton").length != 0){
+		$("#backButton").parent().addClass('na');
+	}
+	if($("#cancelButton").length != 0){
+		$("#cancelButton").parent().addClass('na');
+	}
+	$("#updateButton").parent().addClass('na');
+}
+
+function setCurrentIntent(intent){
+	currentIntent = intent;
+}
+function getCurrentIntent(){
+	return currentIntent;
+}
+
+function setCurrentStageIdEdit(stageId, obj){
+	if( $(obj).closest('.profilereq__editiconlink').is(':visible')){
+		var ot = $('.profilereq__sliderblock').offset().top - 150;
+		$("html, body").animate({ scrollTop: ot }, 500);
+	}
+	currentStageIdEdit = stageId;
+	activeTopTabs('.profilereq__maincont__tabblockli');
+} 
+
+function getCurrentStageIdEdit(){
+	return currentStageIdEdit;
+}
+
+function customRadioButtonBF(myreference, otherRemove){
+	console.dir(myreference);
+	if($(myreference).parent().is('.active')){
+		return false;
+	}
+	else{
+		
+		$(myreference).parents('li').addClass('active').siblings('li').removeClass('active');
+		
+		//$(myreference).parent.addClass('active').addClass('checked').parents('li').addClass('checked').addClass('active').siblings('li').removeClass('active').removeClass('checked');
+		
+	}
+}
+
+
+function contactQuesParserStage(obj, formContDiv, selPropType, price, isRentOrSale){
+	try{
+			if(checkIfExist(obj.qlist)){
+			var qlistArr = obj.qlist;
+			if(qlistArr!= null && qlistArr.length > 0){
+				for(var n = 0; n < qlistArr.length; n++)
+				{
+					var quesObject = qlistArr[n];
+				    var multiques = quesObject.qlist;
+				    if(multiques != "undefined" && multiques!= "" && multiques!= null){
+				    	generateMultiQuestion(quesObject,formContDiv,selPropType,price,isRentOrSale);
+				    }else{
+				    	generateSimpleQuestion(quesObject,formContDiv,selPropType,price,isRentOrSale,0);
+				    }
+				}
+			}
+			questionNo = 1;
+		}
+
+	}catch(e){
+		alert("exception: "+ e);
+	}
+	
+}
+
+
+function autoSuggestion_qna(textboxId, cityId, isProp, divId, noCityFlag, locFlag, stripName, isMobileRequest){
+    //     var city = $('#'+cityId).val();
+    var keyWord = $(textboxId).val();
+    if(noCityFlag && keyWord.length > 2){
+    	new autoKeywordCompleteRevamp_qna($(textboxId)[0], $('#'+divId)[0], 21, 10, null, isProp, 26, locFlag,null,stripName, isMobileRequest);
+    }
+}
+
+
+$('#qna_keyword').live("change",function(event){
+	try{
+		makeRunTimeNameContainer_qna(event,'qna_keyword');
+	}catch(e){
+		if(!(typeof window.errorHandler === 'undefined')){
+			errorHandler('contactQuestionnaire', '#qna_keyword change', e);
+		}
+	}
+});
+
+$("body").on("click", ".crossIconProfile", function(){
+	var getName = $(this).parent().attr("data-name");
+	var localityVal = $("#qna_localityName").val();
+	if(localityVal !="" && localityVal.indexOf(getName) != -1){
+		var getNewLocaVal = $("#qna_localityName").val();
+		if(localityVal.indexOf(getName + ",") != -1){
+			getName =getName + ',';
+			getNewLocaVal  = localityVal.replace(getName, "");
+		}else if(localityVal.indexOf("," + getName) != -1){
+			getName = ','+getName;
+			getNewLocaVal  = localityVal.replace(getName, "");
+		}else if(localityVal.indexOf(getName) != -1){
+			getNewLocaVal  = localityVal.replace(getName, "");
+		}
+		$(this).parent().remove();
+		setIdWidthAuto_qna("qna_keyword");
+		$("#qna_localityName").val(getNewLocaVal);
+	}
+	 
+	 //for psm removing(same code like above)
+	 var getName = $(this).parent().attr("data-name");
+	 var localityVal = $("#qna_projectSocity").val();
+	 if(localityVal !="" && localityVal.indexOf(getName) != -1){
+		 var getNewLocaVal = $("#qna_projectSocity").val();
+		 if(localityVal.indexOf(getName + ",") != -1){
+			 getName =getName + ',';
+			 getNewLocaVal  = localityVal.replace(getName, "");
+		 }else if(localityVal.indexOf("," + getName) != -1){
+			 getName = ','+getName;
+			 getNewLocaVal  = localityVal.replace(getName, "");
+		 }else if(localityVal.indexOf(getName) != -1){
+			 getNewLocaVal  = localityVal.replace(getName, "");
+		}
+		$(this).parent().remove();
+		setIdWidthAuto_qna("qna_keyword");
+		$("#qna_projectSocity").val(getNewLocaVal);
+	 }	 	 
+	 
+});
+
+function callGaqLastEnteredText(value){
+	
+}
+
+function callGaqPushCustom(){
+	
+}
+
+function selectionLocalitySuggestItem(obj, inputId){
+    var getVal = "";
+    $(obj).toggleClass("selected");
+    $(obj).parent().find(".selected").each(function(){
+           var getSelectedVal = $(this).attr("data-localitykey")+",";
+           getVal = getVal+getSelectedVal;
+    });
+    getVal = getVal.replace(/,$/,"");
+    $("#"+inputId).val(getVal);
+}
+
+function generateMultiQuestion(quesObject,formContDiv,selPropType,price,isRentOrSale){
+	
+		var partialHtml = '<div class="contQNA__q__single__heading"><span class="quesNom">Q'+questionNo+'.</span>'+quesObject.label +' </div>';
+		questionNo++;
+		var qlistArr = quesObject.qlist;
+		if(qlistArr!= null && qlistArr.length > 0){
+			partialHtml = partialHtml + '<div id="multiselect' + quesObject.queid +'" class="profilereq__multi__option"></div>';
+			$("#"+formContDiv).append(partialHtml);
+			for(var n = 0; n < qlistArr.length; n++)
+			{
+				var quesObjectTemp = qlistArr[n];
+				generateSimpleQuestion(quesObjectTemp,"multiselect" + quesObject.queid,selPropType,price,isRentOrSale,1);
+				
+			}
+			partialHtml =   '<div class="mycClear"></div>';
+			$("#"+formContDiv).append(partialHtml);
+		}	
+
+	
+}
+
+function generateSimpleQuestion(quesObject,formContDiv,selPropType,price,isRentOrSale, multi){
+	 var qId= quesObject.queid;
+	 var type= parseInt(quesObject.type);
+	 if(qId != "undefined" && qId!= "" && qId!= null
+    		&& type!= "undefined" && type!= "" && type!= null){
+	
+	switch (type) {
+	    case 35901:
+	        generateCheckbox(formContDiv, quesObject);
+	        break;
+	    case 35902:
+	        generateRadioBtn(formContDiv, quesObject, multi);
+	        break; 
+	    case 35918:
+	    	generatePropTypeDropDown(formContDiv, quesObject, quesObject.userAns, isRentOrSale, multi);
+	    	currentPropType = quesObject.userAns;
+	    	break;
+	    case 35916:
+	    	generateBedroomCheckBox(formContDiv, quesObject, selPropType, multi);
+	    	break;
+	    case 35919:
+	    	generateAreaElement(formContDiv, quesObject, selPropType, multi);
+	    	break;
+	    case 35917:
+	    	generateBudgetElement(formContDiv, quesObject, selPropType, price, isRentOrSale, multi);
+	    	break;
+	    case 35911:
+	    	generateAutoSuggestDiv(formContDiv, quesObject, multi);
+	    	break;
+	}
+}
+}
+
+function generateCheckbox(divid, quesObject){
+	var html = '';
+	if(checkIfExist(quesObject.label)){
+		html += '<div class="contQNA__q__single__heading">'+quesObject.label +' </div>';
+	}
+	html += '<div class="contQNA__ans_single">';
+
+	if(checkIfExist(quesObject.ansList) && checkIfExist(quesObject.queid) ){
+		var alistArr = quesObject.ansList;
+		if(alistArr!= null && alistArr.length > 0){
+			for(var n = 0; n < alistArr.length; n++){
+				var ansObject = alistArr[n];
+				if(checkIfExist(ansObject.label) && checkIfExist(ansObject.ansid)){
+					if(checkIfExist(quesObject.userAnsid) && quesObject.userAnsid.indexOf(ansObject.ansid)!= -1){
+						html += '<div class="contQNA__ans_single__item contQNA__ans_single__item--multi w25percent selected" onclick="muultiSelectItem(this,'+quesObject.queid+', '+ansObject.ansid+');">'+ansObject.label+'</div>';
+					} else {
+						html += '<div class="contQNA__ans_single__item contQNA__ans_single__item--multi w25percent" onclick="muultiSelectItem(this,'+quesObject.queid+', '+ansObject.ansid+');">'+ansObject.label+'</div>';
+					}
+				}
+			}
+		}
+	}
+
+	html += '</div>';
+	$("#"+divid).append(html);
+}
+
+function muultiSelectItem(obj, qestionId, ansId){
+	var ansValue= $('#quesInput'+ qestionId).val().trim();
+	var ansarr = (ansValue == "") ? [] : ansValue.split(',');
+	var val = ansId.toString();
+	if($(obj).hasClass("selected")){
+		$(obj).removeClass("selected");
+		ansarr = removeElementFromArray(ansarr, val);
+	}else{
+		$(obj).addClass("selected");
+		ansarr.push(val);
+	}
+	ansValue = ansarr.join();
+	$('#quesInput'+ qestionId).val(ansValue);
+}
+
+function generateFormTopLabel(divid, lblTxt){
+	var html = '<div class="contQNA__q__single__heading"><span class="quesNom">Q1</span>' + lblTxt + '</div>';
+	$("#"+divid).append(html);
+}
+
+function checkIfExist(entityObj){
+	if(entityObj != "undefined" && entityObj!= "" && entityObj!= null){
+		return true;
+	}else{
+		return false;
+	}
+	
+}
+
+function showcontQNADrop(event, showId){
+	event.stopPropagation();
+	$(".contQNA__dropdown").hide();
+	$(".contQNA__prop__dropdown").hide();
+		
+	if($(showId).is(":hidden")){
+		$(showId).show();
+	}else{
+		$(showId).hide();
+	}
+}
+
+function generateAutoSuggestDiv(divid, quesObject, multi){
+	
+	var html = '<div id="autoSuggest"></div>';
+	
+	if(multi==1){
+		html = '<div id="autoSuggest" class="multi_choice"> </div>';
+	} else{
+		$("#autoSuggestQuesNumber").html(questionNo + '. ');
+		questionNo++;
+	}
+	$("#"+divid).append(html);
+	var reqHtml ="";
+	var ltArray="";
+	var psmArray="";
+	if(checkIfExist(quesObject.userAns)){
+		var autoSuggestJson = JSON.parse(quesObject.userAns);
+		 if(autoSuggestJson.ct){
+			 reqHtml = " In " + autoSuggestJson.ct.name;
+		}
+		if(autoSuggestJson.lt){
+			for(i=0;i < autoSuggestJson.lt.length;i++){
+				if(ltArray == ""){
+					ltArray = autoSuggestJson.lt[i].name;
+				}else{
+					ltArray = ltArray + "," + autoSuggestJson.lt[i].name;
+				}
+			}
+			reqHtml = " In " + ltArray;
+		}
+		if(autoSuggestJson.psm){
+			for(i=0;i < autoSuggestJson.psm.length;i++){
+				if(psmArray == ""){
+					psmArray = autoSuggestJson.psm[i].name;
+				}else{
+					psmArray = psmArray + "," + autoSuggestJson.psm[i].name;
+				}
+			}
+			if(psmArray && !reqHtml){
+				reqHtml = " In " + psmArray;
+			}
+		}
+	}
+	$('#locaReq').html(reqHtml);
+	
+	if(checkIfExist(quesObject.userAns)){
+		var autoSuggestJson = JSON.parse(quesObject.userAns);
+		//$('#autoSuggestInputDivqna_keyword').empty();
+		//$('#autoSuggestInputDivqna_keyword').append('<input placeholder="Add More..." class="cityLocProjectField   noPlace" autocomplete="off" id="qna_keyword" name="qna_keyword" onkeyup="autoSuggestion_qna(\'#qna_keyword\', \'qna_bar_city\', false, \'qna_keyword_suggest\',\'WithoutSub\',\'WithoutSub\', \'qna_searchLocId\', \'\');" size="0" style="display: block; width: 98.017px;">');
+		var html = '';
+		
+		if(autoSuggestJson.ct){
+			var name = autoSuggestJson.ct.name;
+			/*html = html +  '<div class="divContainerqna_keyword localityKeywordParent" data-name="'+ name +'" style="overflow: hidden; display: none;"><div class="selectedTextDivqna_keyword localityKeywordNames"'+
+			' title="'+ name +'" data-box="'+ name +'--qna_bar_city_name">'+name
+			+'</div><div class="crossIcon crossIconProfile"></div></div>';*/
+			
+			$("#qna_prev_city").val(autoSuggestJson.ct.id);
+			$('#qna_bar_city').val(autoSuggestJson.ct.id);
+		}
+		
+		if(autoSuggestJson.lt || autoSuggestJson.psm){
+			if(autoSuggestJson.lt){
+				for(i=0;i < autoSuggestJson.lt.length;i++){
+					var name = autoSuggestJson.lt[i].name;
+					html = html + '<div class="divContainerqna_keyword localityKeywordParent" data-name="'+ name +'"  style="overflow: hidden; display: none;"><div class="selectedTextDivqna_keyword localityKeywordNames"'+
+					' title="'+ name +'" data-box="'+ name +'--qna_bar_city_name">'+name
+					+'</div><div class="crossIcon crossIconProfile"></div></div>';
+				}	
+				$('#qna_localityName').val(ltArray);
+			}
+			if(autoSuggestJson.psm){
+				for(i=0;i < autoSuggestJson.psm.length;i++){
+					var name = autoSuggestJson.psm[i].name;
+					html = html + '<div class="divContainerqna_keyword localityKeywordParent" data-name="'+ name +'" style="overflow: hidden; display: none;"><div class="selectedTextDivqna_keyword localityKeywordNames"'+
+					' title="'+ name +'" data-box="'+ name +'--qna_bar_city_name">'+name
+					+'</div><div class="crossIcon crossIconProfile"></div></div>';
+				}	
+				$('#qna_projectSocity').val(psmArray);
+			}
+		}
+		
+		if(html !== ''){
+			$(html).insertBefore("#qna_keyword");
+			setTimeout(function(){
+				$("#qna_keyword").focus();
+				setTimeout(function(){
+					$(document).trigger("click");
+				},200);
+			},500);
+		}	
+	}
+}
+
+function generateRadioBtn(divid, quesObject, multi){
+	var html = '';
+	if(multi==1){
+		if(checkIfExist(quesObject.label)){
+			html += '<div class="contQNA__q__single__heading multi_choice">'+quesObject.label +' </div>';
+		}
+			html += '<div class="contQNA__ans_single  multi_choice">';
+			
+	}else{
+		if(checkIfExist(quesObject.label)){
+			html += '<div class="contQNA__q__single__heading"><span class="quesNom">Q'+questionNo+'.</span>'+quesObject.label +' </div>';
+			questionNo++;
+		}
+			html += '<div class="contQNA__ans_single">';
+			
+	}
+	
+	
+	
+	if(checkIfExist(quesObject.ansList) && checkIfExist(quesObject.queid) ){
+		var alistArr = quesObject.ansList;
+		if(alistArr!= null && alistArr.length > 0){
+			for(n = 0; n < alistArr.length; n++){
+				var ansObject = alistArr[n];
+				if(checkIfExist(ansObject.label) && checkIfExist(ansObject.ansid)){
+					if(checkIfExist(quesObject.userAnsid) && quesObject.userAnsid == ansObject.ansid){
+						html += '<div class="contQNA__ans_single__item w25percent selected"  onclick="singleSelectItem(this,'+quesObject.queid+', '+ansObject.ansid+');">'+ansObject.label+'</div>';
+					}else{
+						html += '<div class="contQNA__ans_single__item w25percent" onclick="singleSelectItem(this,'+quesObject.queid+', '+ansObject.ansid+');">'+ansObject.label+'</div>';
+					}
+				}
+			}
+		}
+	}
+	
+	html += '</div><div class="mycClear"></div>';
+	$("#"+divid).append(html);
+}
+
+
+function generatePropTypeDropDown(formContDiv, quesObject, selPropType, isRentOrSale, multi){
+	var html = '<div class="contQNA__field">';
+	if(multi==1){
+		html = '<div class="contQNA__field multi_choice">';		
+	}else{
+		html = '<div class="contQNA__field">';		
+	}
+	
+	html += '<div class="contQNA__label contQNA__label--pdbot5">Property type</div>';
+	html += '<div class="contQNA__prop">';
+	var propArr = getSelecPropTypeDescArr(selPropType);
+	if((selPropType && selPropType != '') && (typeof propArr !== 'undefined' && propArr.length > 0)){
+		setPropTypeFilled(propArr[0]);
+		$('#quesInput' + quesObject.queid).val(propArr[0]);
+		var bhkOrArea= checkBHKArea(propArr[0]);
+		if(bhkOrArea == ''){
+			$("#areaCont").hide();
+			$("#bedRoomCont").hide();
+		}else if(bhkOrArea == 'bhk'){
+			$("#areaCont").hide();
+			$("#bedRoomCont").show();
+		}else if(bhkOrArea == 'area'){
+			$("#areaCont").show();
+			$("#bedRoomCont").hide();
+		}
+		html += '<div id="contQNAPropElement" style="width: 285px;" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNAProperty\')">'+propArr[1]+'</div>';
+		$('#propTypeReq').html(" " + propArr[1]);
+	}else{
+		html += '<div id="contQNAPropElement" style="width: 265px;" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNAProperty\')">Property Type</div>';	
+		$('#propTypeReq').html(" Property");
+	}
+	html += '<div id="contQNAProperty" class="webkit__scroll contQNA__prop__dropdown" style="width: 265px;">';
+	html += '<div class="contQNA__prop__dropdown__title">Residential</div>';
+	
+	var resiPropArr = getPropTypeByCategArr('R', isRentOrSale);
+	for(var i = 0; i < resiPropArr.length; i++){
+		var innArr= resiPropArr[i]+ '';
+		      var arr = innArr.split("||");
+	    	html += '<div class="contQNA__prop__dropdown__item"  style="width: 265px;" onclick="selectcontQNAItem(this,\'contQNAPropElement\',\''+ arr[0]+'\',\''+quesObject.queid+'\');setPropTypeFilled(\''+arr[0]+ '\');">'+arr[1]+'</div>';
+	}
+	html += '<div class="contQNA__prop__dropdown__title">Commercial</div>';
+	
+	var resiPropArr = getPropTypeByCategArr('C', isRentOrSale);
+	for(var i = 0; i < resiPropArr.length; i++){
+		var innArr= resiPropArr[i]+ '';
+		      var arr = innArr.split("||");
+	    	html += '<div class="contQNA__prop__dropdown__item"  style="width: 265px;"  onclick="selectcontQNAItem(this,\'contQNAPropElement\',\''+ arr[0]+'\',\''+quesObject.queid+'\');setPropTypeFilled(\''+arr[0]+ '\');">'+arr[1]+'</div>';
+	}
+	
+	html += '<div class="contQNA__prop__dropdown__title">Others</div>';
+	var resiPropArr = getPropTypeByCategArr('O', isRentOrSale);
+	for(var i = 0; i < resiPropArr.length; i++){
+		var innArr= resiPropArr[i]+ '';
+		      var arr = innArr.split("||");
+	    	html += '<div class="contQNA__prop__dropdown__item"  style="width: 265px;"  onclick="selectcontQNAItem(this,\'contQNAPropElement\',\''+ arr[0]+'\',\''+quesObject.queid+'\');setPropTypeFilled(\''+arr[0]+ '\');">'+arr[1]+'</div>';
+	}
+	html += '</div></div></div>';
+	$("#"+formContDiv).append(html);
+}
+
+function getPropTypeByCategArr(categ, isRentOrSale){
+	var propArr = [];
+    var valueToPush = new Array();
+	if('R' == categ){
+	    var valueToPush1 = ['10002_10003_10021_10022||Flat'];
+		propArr.push(valueToPush1);
+		valueToPush1 = ['10001_10017||House/Villa'];
+		propArr.push(valueToPush1);
+		
+		if(isRentOrSale == 'r' || isRentOrSale=='R'){
+			valueToPush1 = ['10050_10053||PG/Hostel'];
+			propArr.push(valueToPush1);
+		}else{
+			valueToPush1 = ['10000||Plot/Land'];
+			propArr.push(valueToPush1);
+		}
+	}else if('C' == categ){
+		var valueToPush1 = ['10007_10018||Office Space'];
+		propArr.push(valueToPush1);
+		valueToPush1 = ['10008_10009||Shop/Showroom'];
+		propArr.push(valueToPush1);
+		valueToPush1 = ['10006_10012||Commercial Land'];
+		propArr.push(valueToPush1);
+		valueToPush1 = ['10011||Warehouse/Godown'];
+		propArr.push(valueToPush1);
+		valueToPush1 = ['10013||Industrial Building'];
+		propArr.push(valueToPush1);
+		valueToPush1 = ['10014||Industrial Shed'];
+		propArr.push(valueToPush1);
+	}else if('O' == categ){
+		var valueToPush1 = ['10005||Agricultural Land'];
+		propArr.push(valueToPush1);
+		var valueToPush1 = ['10004||Farm House'];
+		propArr.push(valueToPush1);
+	}
+	return propArr;
+}
+
+function singleSelectItem(obj, qestionId, ansId){
+	$('#quesInput' + qestionId).val(ansId);
+	$(obj).parent().find(".selected").removeClass("selected");
+	$(obj).addClass("selected");
+}
+
+function generateBedroomCheckBox(formContDiv, quesObject, selPropType, multi){
+	var categ= getCategoryByPropertyType(selPropType);
+	var quesId= quesObject.queid;
+	var bhkOrArea= checkBHKArea(selPropType);
+	var html = '';
+	
+	if(multi==1){
+		if(bhkOrArea && bhkOrArea !='bhk' && bhkOrArea !=''){
+			html = '<div class="contQNA__field multi_choice" id="bedRoomCont" style="display:none;">';
+		}else{
+			html = '<div class="contQNA__field multi_choice" id="bedRoomCont">';
+		}
+	}else{
+		if(bhkOrArea && bhkOrArea !='bhk' && bhkOrArea !=''){
+			html = '<div class="contQNA__field" id="bedRoomCont" style="display:none;">';
+		}else{
+			html = '<div class="contQNA__field" id="bedRoomCont">';
+		}
+	}
+	
+	 
+	html += '<div class="contQNA__label contQNA__label--pdbot5">BHK</div>';
+	html += '<div class="contQNA__prop">';
+	html += '<div class="contQNA__prop__bhk">';
+	var totalBHK='';
+	
+	if(quesObject.userAns && quesObject.userAns.indexOf('11700') !== -1){
+		html += '<div class="contQNA__prop__bhk__item selected " onclick="selectBedroomValue(this, \'11700\',\''+ quesId+'\')">1 BHK</div>';
+		selectBedroomValueFirstTimePrefilled('11700', quesId);
+		if(totalBHK){
+			totalBHK = totalBHK +",1";
+		}else{
+			totalBHK = "1";
+		}
+	}else{
+		html += '<div class="contQNA__prop__bhk__item" onclick="selectBedroomValue(this, \'11700\',\''+ quesId+'\')">1 BHK</div>';
+	}
+	
+	if(quesObject.userAns && quesObject.userAns.indexOf('11701') !== -1){
+		html += '<div class="contQNA__prop__bhk__item selected " onclick="selectBedroomValue(this,\'11701\',\''+ quesId+'\')">2 BHK</div>';
+		selectBedroomValueFirstTimePrefilled('11701', quesId);
+		if(totalBHK){
+			totalBHK = totalBHK +",2";
+		}else{
+			totalBHK = "2";
+		}
+	}else{
+		html += '<div class="contQNA__prop__bhk__item" onclick="selectBedroomValue(this,\'11701\',\''+ quesId+'\')">2 BHK</div>';
+	}
+	
+	if(quesObject.userAns && quesObject.userAns.indexOf('11702') !== -1){
+		html += '<div class="contQNA__prop__bhk__item selected" onclick="selectBedroomValue(this,\'11702\',\''+ quesId+'\')">3 BHK</div>';
+		selectBedroomValueFirstTimePrefilled('11702', quesId);
+		if(totalBHK){
+			totalBHK = totalBHK +",3";
+		}else{
+			totalBHK = "3";
+		}
+	}else{
+		html += '<div class="contQNA__prop__bhk__item" onclick="selectBedroomValue(this,\'11702\',\''+ quesId+'\')">3 BHK</div>';
+	}
+	
+	if(quesObject.userAns && quesObject.userAns.indexOf('11703') !== -1){
+		html += '<div class="contQNA__prop__bhk__item selected " onclick="selectBedroomValue(this,\'11703\',\''+ quesId+'\')">4 BHK</div>';
+		selectBedroomValueFirstTimePrefilled('11703', quesId);
+		if(totalBHK){
+			totalBHK = totalBHK +",4";
+		}else{
+			totalBHK = "4";
+		}
+	}else{
+		html += '<div class="contQNA__prop__bhk__item" onclick="selectBedroomValue(this,\'11703\',\''+ quesId+'\')">4 BHK</div>';
+	}
+	
+	if(quesObject.userAns && quesObject.userAns.indexOf('11703') !== -1){
+		html += '<div class="contQNA__prop__bhk__item selected " onclick="selectBedroomValue(this,\'11704-11705-11706-11707-11708-11709-11710\',\''+ quesId+'\')">>4 BHK</div>';
+		selectBedroomValueFirstTimePrefilled('11704-11705-11706-11707-11708-11709-11710', quesId);
+		if(totalBHK){
+			totalBHK = totalBHK +",>4";
+		}else{
+			totalBHK = ">4";
+		}
+	}else{
+		html += '<div class="contQNA__prop__bhk__item" onclick="selectBedroomValue(this,\'11704-11705-11706-11707-11708-11709-11710\',\''+ quesId+'\')">>4 BHK</div>';
+	}
+	if(totalBHK){
+		$('#bhkReq').html(totalBHK + " BHK");
+	}
+	html += '</div></div>';
+	html += '<div class="posRel"><div class="errorMsgBlock" id="errorMsgBlock_bhk_qna" style="display: none;"><span class="arrow"></span>Please Select BHK</div></div>';
+	html += '</div>';
+	$("#"+formContDiv).append(html);
+}
+
+function getCategoryByPropertyType(selPropType){
+	var categ= "R";
+	var propType= selPropType;
+	if(propType && propType!=''){
+		if("_".indexOf(propType) != -1){
+			propType= propType.split('_')[0];
+		}
+		if(("10007".indexOf(propType) != -1) || ("10018".indexOf(propType) != -1) ||  ("10008".indexOf(propType) != -1) ||  ("10009".indexOf(propType) != -1) ||  ("10006".indexOf(propType) != -1) ||  ("10012".indexOf(propType) != -1) ||
+				 ("10011".indexOf(propType) != -1) ||  ("10013".indexOf(propType) != -1) ||  ("10014".indexOf(propType) != -1)){
+			categ= "C";
+		}else if(("10005".indexOf(propType) != -1) || ("10004".indexOf(propType) != -1)){
+			categ= "O";
+		}
+	}
+	return categ;
+}
+
+function checkBHKArea(selectedPropType){
+	var visibleElement= '';
+	if(selectedPropType && selectedPropType !=''){
+
+		if(selectedPropType.indexOf('10002') != -1 || selectedPropType.indexOf('10003') != -1 || selectedPropType.indexOf('10021') != -1 || selectedPropType.indexOf('10022') != -1 || selectedPropType.indexOf('10001') != -1 || selectedPropType.indexOf('10017') != -1){
+			visibleElement = 'bhk';
+		}else if(selectedPropType.indexOf("10000") != -1 ||selectedPropType.indexOf("10007") != -1 || selectedPropType.indexOf("10018") != -1 
+				|| selectedPropType.indexOf("10008") != -1 || selectedPropType.indexOf("10009") != -1 || selectedPropType.indexOf("10006") != -1 || selectedPropType.indexOf("10012") != -1
+		|| "10011".indexOf(selectedPropType) != -1 || "10013".indexOf(selectedPropType) != -1 || "10014".indexOf(selectedPropType) != -1 || "10005".indexOf(selectedPropType) != -1 || "10004".indexOf(selectedPropType) != -1){
+			visibleElement = 'area';
+		}
+		return visibleElement;
+	}
+}
+
+function selectBedroomValue(obj,bedCode,quesId){
+	var divValue= $('#quesInput'+ quesId).val().trim();
+	var bedArr= divValue.split(',');
+	
+	if($(obj).hasClass("selected")){
+		$(obj).removeClass("selected");
+		bedArr= removeElementFromArray(bedArr, bedCode);
+	}else{
+		$(obj).addClass("selected");
+		bedArr.push(bedCode);
+	}
+	divValue= bedArr.join();
+	$('#quesInput'+ quesId).val(divValue);
+}
+
+function selectBedroomValueFirstTimePrefilled(bedCode,quesId){
+	if($('#quesInput'+ quesId).val() == null || typeof($('#quesInput'+ quesId).val()) == "undefined"){
+		return;
+	}
+	var divValue= $('#quesInput'+ quesId).val().trim();
+	var bedArr= divValue.split(',');
+	bedArr.push(bedCode);
+	divValue= bedArr.join();
+	$('#quesInput'+ quesId).val(divValue);
+}
+
+function removeElementFromArray(array, element) {
+	  var index = array.indexOf(element);
+	  if (index > -1) {
+	      array.splice(index, 1);
+	  }
+	  return array;
+}
+
+function setAreaVal(obj, elementId){
+	var getValue= $(obj).val();
+	$('#'+elementId).val(getValue);
+}
+
+function selectValueInDropdown(obj, setValID, elementId, value){
+	var getVal = $(obj).text();
+	$(obj).parent().find(".selected").removeClass("selected");
+	$(obj).addClass("selected");
+	$("#"+setValID).text(getVal);
+	$("#"+elementId).val(value);
+}
+
+
+
+function generateAreaElement(formContDiv, quesObject, selPropType, multi){
+	var categ= getCategoryByPropertyType(selPropType);
+	var quesId= quesObject.queid;
+	var minAreaId= 'quesInputAreamin'+ quesId;
+	var maxAreaId= 'quesInputAreamax'+ quesId;
+	var areaUnitId= 'quesInputAreaunit'+ quesId;
+	
+	$('#quesInputAreaunit' + quesId).val('12850');
+	var html = '';
+	var bhkOrArea= checkBHKArea(selPropType);
+	
+	if(multi==1){
+		if(bhkOrArea && bhkOrArea != 'area' && bhkOrArea != ''){
+			html = '<div class="contQNA__field multi_choice" id="areaCont" style="display:none;">';
+		}else{
+			html = '<div class="contQNA__field multi_choice" id="areaCont">';
+		}
+	}else{
+		if(bhkOrArea && bhkOrArea != 'area' && bhkOrArea != ''){
+			html = '<div class="contQNA__field" id="areaCont" style="display:none;">';
+		}else{
+			html = '<div class="contQNA__field" id="areaCont">';
+		}
+		
+	}
+	
+	html += '<div class="contQNA__label contQNA__label--pdbot5">AREA</div>';
+	html += '<div class="contQNA__prop">';
+	var area = JSON.parse(quesObject.userAns);
+	if(area && area.areamin){
+		var areamin = area.areamin;
+		$('#'+minAreaId).val(areamin);
+		html += '<input type="text" value="' + areamin +'" class="ft_lt contQNA__prop__input" style="width:78px;" onblur="setAreaVal(this,\''+minAreaId+'\')">';
+	}else{
+		html += '<input type="text" value="" class="ft_lt contQNA__prop__input" style="width:78px;" onblur="setAreaVal(this,\''+minAreaId+'\')">';
+	}
+	html += '<span class="contQNA__prop__to">to</span>';
+	if(area && area.areamax){
+		var areamax = area.areamax;
+		$('#'+maxAreaId).val(areamax);
+		html += '<input type="text" value="' + areamax +'" class="ft_lt contQNA__prop__input" style="width:78px;" onblur="setAreaVal(this,\''+maxAreaId+'\')">';
+	}else{
+		html += '<input type="text" value="" class="ft_lt contQNA__prop__input" style="width:78px;" onblur="setAreaVal(this,\''+maxAreaId+'\')">';
+	}
+	html += '<div class="ft_lt" style="width:88px; margin-left:10px; position:relative;">';
+	if(area && area.areaunit){
+		var areaunit = area.areaunit;
+		$('#'+areaUnitId).val(areaunit);
+		if(areaunit == '12850'){
+			html += '<div id="contQNASqftElem" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNASqft\')">sqft</div>';
+		}else if(areaunit == '12851'){
+			html += '<div id="contQNASqftElem" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNASqft\')">sqyrd</div>';
+		}else if(areaunit == '12852'){
+			html += '<div id="contQNASqftElem" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNASqft\')">sqm</div>';
+		}
+	}else{
+		html += '<div id="contQNASqftElem" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNASqft\')">sqft</div>';
+	}
+	html += '<div id="contQNASqft" class="contQNA__dropdown">';
+	html += '<div class="contQNA__dropdown__item" onclick="selectValueInDropdown(this,\'contQNASqftElem\',\''+areaUnitId+'\',\'12850\');">sqft</div>';
+	html += '<div class="contQNA__dropdown__item" onclick="selectValueInDropdown(this,\'contQNASqftElem\',\''+areaUnitId+'\',\'12851\');">sqyrd</div>';
+	html += '<div class="contQNA__dropdown__item" onclick="selectValueInDropdown(this,\'contQNASqftElem\',\''+areaUnitId+'\',\'12852\');">sqm</div>';
+	html += '</div>';
+	html += '</div>';
+	html += '<div class="clearAll"></div>';
+	html += '<div class="posRel"><div class="errorMsgBlock" id="errorMsgBlock_aria_qna" style="display: none;"><span class="arrow"></span>Please Select Area</div></div>';
+	html += '</div></div>';	
+	$("#"+formContDiv).append(html);
+}
+
+function generateBudgetElement(formContDiv, quesObject, selPropType, price, isRentOrSale, multi){
+	var quesId= quesObject.queid;
+	var budgetFlagReq = 0;
+	var minBudId= 'quesInputBudmin'+ quesId;
+	var maxBudId= 'quesInputBudmax'+ quesId;
+	
+	var selCateg= "r";
+	if(isRentOrSale =='s' || isRentOrSale == 'b' || isRentOrSale =='S' || isRentOrSale == 'B'){
+		selCateg= 's';
+	}
+	var budgetArrMin = getBudgetArray(selCateg,'min');
+	var budgetArrMax = getBudgetArray(selCateg,'max');
+	
+	 var html;
+		if(multi==1){
+			html = '<div class="contQNA__field multi_choice">';
+		} else{
+			html = '<div class="contQNA__field">';			
+		}
+
+		
+     html += '<div class="contQNA__label contQNA__label--pdbot5">BUDGET</div>';
+     
+     // for Min Drop:
+     
+     html += '<div class="ft_lt contQNA__prop"  style="width: 125px;" >';
+     if(quesObject.userAns){
+    	 var budget = JSON.parse(quesObject.userAns);
+    	 if(budget.min && typeof budget.min !== "undefined" ){
+    		 setBudgetFilled();
+    		 var displayValue = fetchBudgetValueForMin(budget.min, 'min', selCateg);
+    		 if(typeof displayValue !== "undefined"){
+    			 if(displayValue !== 'MIN'){
+    				 displayValue = ' <span class="">₹</span> ' + displayValue; 
+    			 }
+    			 html += '<div id="contQNABudgetElemMin" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNABudgetMin\', this)">' + displayValue + '</div>';
+    			 $('#quesInputBudmin'+quesId).val(budget.min);
+    			 $('#within').html(' within');
+    			 $('#lowbudgetReq').html( ' ' + displayValue);
+    			 budgetFlagReq=1;
+    		 }else{
+            	 html += '<div id="contQNABudgetElemMin" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNABudgetMin\', this)">MIN</div>';
+             }		 
+    	 }else{
+        	 html += '<div id="contQNABudgetElemMin" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNABudgetMin\', this)">MIN</div>';
+         }
+     }else{
+    	 html += '<div id="contQNABudgetElemMin" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNABudgetMin\', this)">MIN</div>';
+     }
+     html += '<div id="contQNABudgetMin" class="webkit__scroll contQNA__dropdown contQNA__dropdown--bottom">';
+     
+     for(i = 0; i < budgetArrMin.length; i++){																	
+          var quesDivId= 'quesInputBudmin'+ quesId;
+    		 html += '<div class="contQNA__dropdown__item" data-value="'+budgetArrMin[i].split("|")[0]+'" onclick="selectBudgetItem(this,\'contQNABudgetElemMin\',\''+ quesDivId+'\',\''+ budgetArrMin[i].split("|")[0]+'\');setBudgetFilled();">&#8377; '+budgetArrMin[i].split("|")[1]+'</div>';
+     }
+     html += '</div></div>';
+     
+     html += '<div class="ft_lt" style="width:25px; text-align:center;">&nbsp;_&nbsp;</div>';
+     
+     // for Max Drop:
+     html += '<div class="ft_lt contQNA__prop" style="width:125px;">';
+     if(quesObject.userAns){
+    	 var budget = JSON.parse(quesObject.userAns);
+    	 if(budget.max && typeof budget.max !== "undefined"){
+    		 setBudgetFilled();
+    		 var displayValue = fetchBudgetValueForMin(budget.max, 'max', selCateg);
+    		 if(typeof displayValue !== "undefined"){
+    			 if(displayValue !== 'MAX'){
+    				 displayValue = ' <span class="">₹</span> ' + displayValue; 
+    			 }
+    			 html += '<div id="contQNABudgetElemMax" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNABudgetMax\', this)">' + displayValue +'</div>';
+    			 $('#quesInputBudmax'+quesId).val(budget.max);
+    			 if(budgetFlagReq == 1){
+    				 $('#highbudgetReq').html(' - ' + displayValue);
+    			 }else{
+    				 $('#highbudgetReq').html( " " + displayValue);
+    			 }
+    			 $('#within').html('within');
+    		 }else{
+            	 html += '<div id="contQNABudgetElemMax" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNABudgetMax\', this)">MAX</div>';
+             }	 
+    	 }else{
+        	 html += '<div id="contQNABudgetElemMax" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNABudgetMax\', this)">MAX</div>';
+         }
+     }else{
+    	 html += '<div id="contQNABudgetElemMax" class="contQNA__prop__element" onclick="showcontQNADrop(event, \'#contQNABudgetMax\', this)">MAX</div>';
+     }
+     html += '<div id="contQNABudgetMax" class="webkit__scroll contQNA__dropdown contQNA__dropdown--bottom">';
+     for(j = 0; j < budgetArrMax.length; j++){
+    	 var quesDivId= 'quesInputBudmax'+ quesId;
+          html += '<div class="contQNA__dropdown__item" data-value="'+budgetArrMax[j].split("|")[0]+'" onclick="selectBudgetItem(this,\'contQNABudgetElemMax\',\''+ quesDivId+'\',\''+ budgetArrMax[j].split("|")[0]+'\');setBudgetFilled();">&#8377; '+budgetArrMax[j].split("|")[1]+'</div>';
+     }
+     html += '</div></div>';
+     html += '<div class="clearAll"></div>';
+     html += '<div class="posRel"><div class="errorMsgBlock" id="errorMsgBlock_budget_qna" style="display: none;"><span class="arrow"></span>Please Select Budget</div></div>';
+     html += '</div>';
+     $("#"+formContDiv).append(html);
+	
+}
+
+function fetchBudgetValueForMin(key, minOrMax, selCateg){
+	var budgetArr = getBudgetArray(selCateg, minOrMax);
+	for(i = 0; i < budgetArr.length; i++){																	
+        if(key == budgetArr[i].split("|")[0]){
+        	return budgetArr[i].split("|")[1];
+        }
+	}	
+}
+
+function getBudgetArray(selCateg, minOrMax){
+	var arrRange;
+	if(selCateg == 's'){
+		if(minOrMax == 'min'){
+			arrRange = ["0|MIN","500000|5 Lac","1000000|10 Lac","2000000|20 Lac","3000000|30 Lac","4000000|40 Lac","5000000|50 Lac","6000000|60 Lac","7000000|70 Lac","8000000|80 Lac","9000000|90 Lac","10000000|1 Cr","12000000|1.2 Cr","14000000|1.4 Cr","16000000|1.6 Cr","18000000|1.8 Cr","20000000|2 Cr","23000000|2.3 Cr","26000000|2.6 Cr","30000000|3 Cr","35000000|3.5 Cr","40000000|4 Cr","45000000|4.5 Cr","50000000|5 Cr","100000000|10 Cr","200000000|20 Cr"];
+		}else{
+			arrRange = ["500000|5 Lac","1000000|10 Lac","2000000|20 Lac","3000000|30 Lac","4000000|40 Lac","5000000|50 Lac","6000000|60 Lac","7000000|70 Lac","8000000|80 Lac","9000000|90 Lac","10000000|1 Cr","12000000|1.2 Cr","14000000|1.4 Cr","16000000|1.6 Cr","18000000|1.8 Cr","20000000|2 Cr","23000000|2.3 Cr","26000000|2.6 Cr","30000000|3 Cr","35000000|3.5 Cr","40000000|4 Cr","45000000|4.5 Cr","50000000|5 Cr","100000000|10 Cr","200000000|20 Cr","1000000000|MAX"];
+		}
+	}else{
+		if(minOrMax == 'min'){
+			arrRange= ["0|MIN","5000|5000","7500|7500","10000|10000","12500|12500","15000|15000","20000|20000","25000|25000","30000|30000","35000|35000","40000|40000","50000|50000","60000|60000","70000|70000","85000|85000","100000|1 Lac","150000|1.5 Lac","200000|2 Lac","400000|4 Lac","700000|7 Lac","1000000|10 Lac"];
+		}else{
+			arrRange= ["5000|5000","7500|7500","10000|10000","12500|12500","15000|15000","20000|20000","25000|25000","30000|30000","35000|35000","40000|40000","50000|50000","60000|60000","70000|70000","85000|85000","100000|1 Lac","150000|1.5 Lac","200000|2 Lac","400000|4 Lac","700000|7 Lac","1000000|10 Lac","5000000|MAX"];
+		}
+	}
+	return arrRange;
+}
+
+function selectBudgetItem(obj, setValID, divId, divValue){
+	var getVal = $(obj).text();
+	$(obj).parent().find(".selected").removeClass("selected");
+	$(obj).addClass("selected");
+	$("#"+setValID).text(getVal);
+	$('#'+ divId).val(divValue);
+	$(obj).parent().hide();
+}
+
+function selectcontQNAItem(obj, setValID, getVal, quesId){
+	var dataH = $('.profilereq__whiteblock').outerHeight();
+	$('#profilereq__editslider').css('height', dataH);
+	var getTxt = $(obj).text();
+	$(obj).parent().find(".selected").removeClass("selected");
+	$(obj).addClass("selected");
+	$("#"+setValID).text(getTxt);
+	$("#quesInput"+quesId).val(getVal);
+	$(obj).parent().hide();
+	
+	var bhkOrArea= checkBHKArea(getVal);
+	if(bhkOrArea == ''){
+		$("#areaCont").hide();
+		$("#bedRoomCont").hide();
+	}else if(bhkOrArea == 'bhk'){
+		$("#areaCont").hide();
+		$("#bedRoomCont").show();
+	}else if(bhkOrArea == 'area'){
+		$("#areaCont").show();
+		$("#bedRoomCont").hide();
+	}
+}
+
+function getSelecPropTypeDescArr(selectedPropType){
+	var propArr = [];
+    var valueToPush = new Array();
+	if(selectedPropType && selectedPropType !=''){
+		if("10002_10003_10021_10022".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10002_10003_10021_10022';
+			valueToPush[1] = 'Flat';
+			propArr.push(valueToPush);
+		}else if("10002_10003_10021_10022_10020".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10002_10003_10021_10022_10020';
+			valueToPush[1] = 'Flat';
+			propArr.push(valueToPush);
+		}else if("10001_10017".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10001_10017';
+			valueToPush[1] = 'House/Villa';
+			propArr.push(valueToPush);
+		}else if("10050_10053".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10050_10053';
+			valueToPush[1] = 'PG/Hostel';
+			propArr.push(valueToPush);
+		}else if("10000".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10000';
+			valueToPush[1] = 'Plot/Land';
+			propArr.push(valueToPush);
+		}else if("10007_10018".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10007_10018';
+			valueToPush[1] = 'Office Space';
+			propArr.push(valueToPush);
+		}else if("10008_10009".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10008_10009';
+			valueToPush[1] = 'Shop/Showroom';
+			propArr.push(valueToPush);
+		}else if("10006_10012".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10006_10012';
+			valueToPush[1] = 'Commercial Land';
+			propArr.push(valueToPush);
+		}else if("10011".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10011';
+			valueToPush[1] = 'Warehouse/Godown';
+			propArr.push(valueToPush);
+		}else if("10013".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10013';
+			valueToPush[1] = 'Industrial Building';
+			propArr.push(valueToPush);
+		}else if("10014".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10014';
+			valueToPush[1] = 'Industrial Shed';
+			propArr.push(valueToPush);
+		}else if("10005".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10005';
+			valueToPush[1] = 'Agricultural Land';
+			propArr.push(valueToPush);
+		}else if("10004".indexOf(selectedPropType) != -1){
+	        valueToPush[0] = '10004';
+			valueToPush[1] = 'Farm House';
+			propArr.push(valueToPush);
+		}
+		return valueToPush;
+	}
+}
+
+function getQuestionListAjax(stageid, id){
+	var urlStr = SITE_DOMAIN_URL + "buyerDashboardIntentQuestionEdit.html";
+	var paramter = 'stageId='+ stageid + '&id=' + id + '&intent='+  currentIntent;
+	$.ajax({
+		dataType : "html",
+		type : "GET",
+		url : urlStr,
+		data: paramter ,
+		async : false,
+		success : function(obj) {
+			$('#profilereq__editslider').show();
+			$("#questionEditAjax").animate({'opcity': 0}).html(obj).animate({'opacity': 1});
+			var setforsliderheight = $(".profilereq__editslider").height();
+			$(".profilereq__whiteblock").height(setforsliderheight);
+		},
+		complete: function(){
+			if(stageid == '35931'){
+				showCompactView_qna("qna_keyword");
+			}	
+		}
+	});
+}
+
+function getIntentChangeQuestionListWithNewIntent(int, id, ansid){
+	var urlStr = contextPath + "buyerDashboardIntentChange.html";
+	var paramter = 'intent='+ int + '&id=' + id + "&ansid=" + ansid;
+	$.ajax({
+		dataType : "html",
+		type : "GET",
+		url : urlStr,
+		data: paramter ,
+		async : false,
+		success : function(obj) {
+			$("#intentChange").html(obj);
+			
+			/*var requirementStage = $('#requirementStage').val();
+			var pars = JSON.parse(requirementStage);
+			contactQuesParserStage(pars,'','','','');*/
+		}
+	});
+}
+
+function getIntentChangeQuestionList(id){
+	var urlStr = contextPath + "buyerDashboardIntentChange.html";
+	var paramter = 'intent='+ currentIntent + '&id=' + id;
+	$.ajax({
+		dataType : "html",
+		type : "GET",
+		url : urlStr,
+		data: paramter ,
+		async : false,
+		success : function(obj) {
+			$("#intentChange").html(obj);
+			/*var requirementStage = $('#requirementStage').val();
+			var pars = JSON.parse(requirementStage);
+			contactQuesParserStage(pars,'','','','');*/
+		}
+	});
+}
+
+function saveAndFetchNewQuestionsAjax(request, autoCt, autoLoc, autoPSM, autoSuggLoc, autoSuggestQuesId, id, nextStageId){
+	var urlStr =  contextPath + "buyerDashboardQuestionSave.html"; 
+	var stringReq = JSON.stringify(request);
+	var paramter = 'parameter=' +  stringReq + '&autoCt=' + autoCt + '&autoLoc=' + autoLoc + '&autoPSM=' + autoPSM + '&autoSuggLoc=' + autoSuggLoc +
+				'&autoSuggestQuesId=' + autoSuggestQuesId + '&id=' + id + '&stageId='+ nextStageId + '&intent='+  currentIntent;
+	$.ajax({
+		dataType : "html",
+		type : "POST",
+		url : urlStr,
+		data: paramter ,
+		async : false,
+		success : function(obj) {
+			if(nextStageId){
+				$('#profilereq__editslider').show();
+				$("#questionEditAjax").animate({'opcity': 0}).html(obj).animate({'opacity': 1});
+				var setforsliderheight = $(".profilereq__editslider").height();
+				$(".profilereq__whiteblock").height(setforsliderheight);
+			}
+			currentIntent = $('#newIntent').val();
+		}
+	});
+}
+
+function submitAnswerOfQuestion(quesIds,ansIds,contactId,intentIndex,currentBrowseSessionId,userMobile,userEmail,propertyType
+		, price,locId,cityd, category,ty,areamin,areamax,areaunit,bd,quesNo, budmin,budmax,checkBrokerConnect, userName,downloadReport,
+		autoCt,autoLoc,autoPSM,autoSuggLoc,rawQArr,rawTypeArr){
+	
+	if(!(downloadReport != null && downloadReport != 'undefined' && downloadReport == 'Y')) {
+		downloadReport= '';
+	}
+	
+	var urlStr =contextPath+"ajax/submitAnswerOfQuestion";	
+	var paramter = 'qIds='+ quesIds+ '&ansIds='+ ansIds + '&conId=' + contactId
+	 + '&intId=' + intentIndex + '&cbsC=' + currentBrowseSessionId
+	 + '&uEmail=' + userEmail + '&uMob=' + userMobile + '&proType='+propertyType 
+	 + '&price='+ price + '&locId='+ locId+ '&cityId='+ cityd+'&cg='+ category 
+	 + '&ty='+ty+'&aMin='+areamin+'&aMax='+ areamax+ '&aUnit='+ areaunit+'&bd='+ bd
+	 +'&quesNo='+ quesNo + '&budmin='+ budmin + '&budmax='+budmax
+	 +'&chkBkrCnt='+ checkBrokerConnect+ '&uName='+userName+'&dRep='+ downloadReport
+	 +'&aCt='+autoCt+'&aLoc='+autoLoc+'&aPSM='+ autoPSM+ '&aSgLoc='+ autoSuggLoc
+	 +'&rawQArr='+ rawQArr + '&rawTypeArr='+rawTypeArr
+	 +'';
+	
+	if(userEmail){
+		userEmail = userEmail.replace('"', '');
+		userEmail = userEmail.replace('"', '');
+		}
+	
+	var flag = true;
+	$.ajax({
+		dataType: "html",
+		type: "POST",
+		url: urlStr,
+		data:paramter,
+		async:false, 
+		success: function(obj){
+		if(obj.indexOf("qnaFailure") == -1){
+			$('#contactQuestionDivInnerTag'+contactId).html(obj);
+			
+			$(".closeConIcon",parent.document).hide();
+			$(".newSimilarForDetail").hide();
+			
+			$('#contactQuestionDivTag'+contactId).show();
+			flag = false;
+			
+			$('#aboveAgentPhoneForm'+contactId).find(".closeForm").hide();
+			$('#aboveContactAgentForm'+contactId).find(".closeForm").hide();
+			$('#siteVisitContactAgentForm'+contactId).find(".closeForm").hide();
+			
+			var userName = $('#name'+contactId).val();
+		//	$('.sharedDetails').show();
+			
+			var successText = $('#questionSuccess').val();
+			if(successText){
+				$('.summerBrf').html(successText);
+			}
+			$('.userNamPhone').html(userName +", "+userMobile);
+			
+			if(_gaq){
+				var qIDs= $('#reqQues').val();
+				var reqIntent= $('#reqIntent').val();
+				_gaq.push(['_trackEvent','Profile',reqIntent+'_'+qIDs,'Shown']);
+			}
+		}else{
+			$('#contactQuestionDivTag'+contactId).hide();
+			$('#contactQuestionDivInnerTag'+contactId).html(obj);
+			var userName = $('#name'+contactId).val();
+			if((typeof rightHandSide =='undefined' || (typeof rightHandSide!='undefined' && rightHandSide != 'Y'))){
+				$('.sharedDetails').show();
+			}
+			var successText = $('#questionSuccess').val();
+			$(".newSimilarForDetail").show();
+			if(successText){
+				$('.summerBrf').html(successText);
+			}
+			$('.userNamPhone').html(userName +", "+userMobile);
+			flag = true;
+			
+			$('#aboveAgentPhoneForm'+contactId).find(".closeForm").show();
+			$('#aboveContactAgentForm'+contactId).find(".closeForm").show();
+			$('#siteVisitContactAgentForm'+contactId).find(".closeForm").show();
+		}
+	}
+	});
+	/*if(flag){
+		setUIAfterQuestions(contactId,checkBrokerConnect, userName,downloadReport);
+}*/
+}
+
+
+
+function setActiveEditBox(stageId){
+	$('#profilereq__editslider').removeAttr('style');
+	$("#stageEditTop"+currentStageIdEdit).removeClass("active");
+	currentStageIdEdit = stageId;
+	$("#stageEditTop"+currentStageIdEdit).addClass("active");
+}
+
+function setBuyerJourneyCssStart(userAnsId){
+	$("#stageEditTop"+currentStageIdEdit).addClass("active");
+}
+
+function nextTabOrClose(nextStageId, id, obj ){
+	$('#profilereq__editslider').removeAttr('style');
+	
+		var currentScrPos = $(obj).offset().top;
+		var bdtpos =  $('#buyerDashBoardSection').offset().top - 120;
+	    $("html, body").animate({ scrollTop: bdtpos }, 500);
+	 	var $this = obj;
+	 	fireGaForQuestionSubmit();
+	if(nextStageId){
+		var flag = submitAnsToQuest(id, nextStageId);
+		if(flag){
+			setTimeout(function(){
+				setActiveEditBox(nextStageId);
+				/*getQuestionListAjax(nextStageId,id);*/
+				setCurrentStageIdEdit(nextStageId, $this);
+			}, 800);
+		}	
+	}else{
+		var flag = submitAnsToQuest(id, nextStageId);
+		if(flag){
+			setTimeout(function(){
+				closeElement();
+				getIntentChangeQuestionList(id);
+			}, 800);
+		}	
+	}
+}
+function fireGaForQuestionSubmit(){
+	var stageName='';
+	if(currentStageIdEdit == "35931"){
+		stageName="Requirement";
+	}else if(currentStageIdEdit == "35937"){
+		stageName="preference";
+	}else if(currentStageIdEdit == "35932"){
+		stageName="intent";
+	}else if(currentStageIdEdit == "35936"){
+		stageName="Identity";
+	}
+	gaTrackEvent('MyProfile','Update', stageName);
+}
+
+function hideUnhideBhkArea(){
+	var propArr = getSelecPropTypeDescArr(currentPropType);
+	if((currentPropType && currentPropType != '') && (typeof propArr !== 'undefined' && propArr.length > 0)){
+		var bhkOrArea= checkBHKArea(propArr[0]);
+		if(bhkOrArea == ''){
+			$("#areaCont").hide();
+			$("#bedRoomCont").hide();
+			$("#bhkReq").hide();
+		}else if(bhkOrArea == 'bhk'){
+			$("#areaCont").hide();
+			$("#bedRoomCont").show();
+		}else if(bhkOrArea == 'area'){
+			$("#areaCont").show();
+			$("#bedRoomCont").hide();
+			$("#bhkReq").hide();
+		}
+	}
+}	
+
+function setBhkFilledByPropType(){
+	
+}
+
+$( document ).ready(function() {
+	
+	
+	function resetForHeight(){
+		var  profilereq__block1H = $(".profilereq__block1").outerHeight();
+		var  profilereq__block2H = $(".profilereq__block2").outerHeight();
+		var  profilereq__block3H = $(".profilereq__block3").outerHeight();
+		var  profilereq__block4H = $(".profilereq__block4").outerHeight();
+	
+		if ($(".profilereq__block2").css("display") == "none") {
+			if (profilereq__block1H > profilereq__block3H){
+				$(".profilereq__block3").height(profilereq__block1H);
+			}
+			else{
+				$(".profilereq__block1").height(profilereq__block3H);
+			}
+	    } else {
+			if (profilereq__block1H > profilereq__block2H){
+				$(".profilereq__block2").height(profilereq__block1H);
+			}
+			else{
+				$(".profilereq__block1").height(profilereq__block2H);
+			}
+		
+			if (profilereq__block3H > profilereq__block4H){
+				$(".profilereq__block4").height(profilereq__block3H);
+			}
+			else{
+				$(".profilereq__block3").height(profilereq__block4H);
+			}
+		}
+	}
+	
+	resetForHeight();
+	
+	$(".profilereq__secondlevellink").click(function(){
+		$(this).parent(".profilereq__secondlevelul").find(".profilereq__secondlevellink").removeClass("active");
+		//$(this).addClass("active");
+	});
+	$('body').on('click', '.profilereq__editlink', function (){
+		var setforsliderheight = $(".profilereq__editslider").height();
+		//$(".profilereq__whiteblock").height(setforsliderheight);
+		$(".profilereq__editslider").addClass("profilereq__tozero");
+	});
+	
+});
+
+function closeElement(){
+	$('#profilereq__editslider').removeAttr('style');
+	var defheight = $(".profilereq__whiteblock").height();
+	$(".profilereq__whiteblock").height("auto");
+	$(".profilereq__editslider").removeClass("profilereq__tozero");
+	activeRemoveTopTabs('.profilereq__maincont__tabblockli');	
+}
+
+function activeTopTabs(elementClassName){
+	$(elementClassName).each(function(){
+		$(this).addClass('no-action');
+	})
+	$('.customRadioButtonBF.active.checked').parents('li').removeClass('no-action');
+	//customRadioButtonBF active checked
+	
+}
+
+function activeRemoveTopTabs(elementClassName){
+	$(elementClassName).each(function(){
+		$(this).removeClass('no-action');
+	})
+	//profilereq__editslider  profilereq__tozero 
+}
+
+
+$(document).ready(function(){
+	document.getElementById('buyerDashBoardSection').onclick = function(e) {
+	    if(e.target != document.getElementById('contQNAProperty') || e.target != document.getElementById('qna_keyword_suggest') || e.target != document.getElementById('contQNABudgetMin') || e.target != document.getElementById('contQNABudgetMax')) {
+	    	$("#contQNAProperty, #qna_keyword_suggest, #contQNABudgetMin, #contQNABudgetMax, #contQNASqft" ).hide();
+	    } else {
+	        return true;
+	    }
+	};
+	
+	$(window).scroll(function(){
+		$("#contQNAProperty, #qna_keyword_suggest, #contQNABudgetMin, #contQNABudgetMax, #contQNASqft").hide();
+	});
+	
+	if($('.profilereq__editslider.profilereq__tozero').is(':visible')){
+		activeTopTabs('.profilereq__maincont__tabblockli');
+	}
+	else{
+		activeRemoveTopTabs('.profilereq__maincont__tabblockli');
+	}
+})

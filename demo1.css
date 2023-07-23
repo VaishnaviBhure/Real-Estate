@@ -1,0 +1,1031 @@
+.Modern-houses {
+    color: rgb(255, 255, 255);
+}
+
+.Modern-houses-home-pg {
+    padding: 50px 0px 0px 0px;
+    color: black;
+    font-size: 4rem;
+    font-weight: bold;
+}
+
+.rooms {
+    font-size: 20px;
+    color: rgb(106, 106, 106);
+    padding: 0px 0px 0px 30px;
+}
+
+.temperature {
+    padding: 10px 0px 0px 50px;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(0, 0, 0);
+}
+
+.arrow {
+    padding: 20px 0px 0px 1135px;
+}
+
+.left-arrow {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+.right-arrow {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+html,
+body,
+header,
+.view {
+    height: 100%;
+}
+
+.info-row {
+    padding: 250px 0px 0px 0px;
+}
+
+.information-bx1 {
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px 10px 20px 10px;
+}
+
+.City-heading {
+    border: 1px solid grey;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.City {
+    font-size: 20px;
+    padding: 10px 0px 0px 0px;
+}
+
+.City-name {
+    font-size: 25px;
+    font-weight: bold;
+
+}
+
+.City-place {
+    color: grey;
+    font-size: 20px;
+    padding: 0px 0px 10px 0px;
+}
+
+/* .people{
+    font-size: 20px;
+    padding: 10px 0px 0px 0px;
+} */
+/* .people-count{
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+
+} */
+.people-heading {
+    padding-top: 10px;
+}
+
+#people {
+    font-size: 22px;
+    font-weight: bold;
+    border: none;
+    padding-top: 10px;
+
+}
+
+#people_less {
+    color: grey;
+    font-size: 20px;
+    padding: 0px 0px 10px 0px;
+    background-color: white;
+    border: none;
+}
+
+#people_more {
+    color: grey;
+    font-size: 20px;
+    padding: 0px 0px 10px 0px;
+    border: none;
+    background-color: white;
+
+
+}
+
+.people-heading {
+    border: 1px solid grey;
+    border-radius: 20px;
+    font-size: 20px;
+}
+
+.check_in {
+    font-size: 20px;
+}
+
+.checking-bx {
+    border: 1px solid grey;
+    border-radius: 20px;
+    padding: 10px 0 0 0;
+}
+
+.today_date {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#yesterday {
+    border: none;
+    background-color: white;
+    padding-top: 10px;
+    font-size: 20px;
+    color: grey;
+}
+
+#tomorrow {
+    border: none;
+    background-color: white;
+    padding-top: 10px;
+    font-size: 20px;
+    color: grey;
+}
+
+.check_out {
+    font-size: 20px;
+}
+
+.checking-bx {
+    border: 1px solid grey;
+    border-radius: 20px;
+    padding: 10px 0 0 0;
+}
+
+.tomorrow_date {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+#yesterday {
+    border: none;
+    background-color: white;
+    padding-top: 10px;
+    font-size: 20px;
+    color: grey;
+}
+
+#tomorrow {
+    border: none;
+    background-color: white;
+    padding-top: 10px;
+    font-size: 20px;
+    color: grey;
+}
+
+.map {
+    width: 100%;
+    /* height: 380px; */
+    /* height: 400px; */
+    left: 25%;
+}
+
+
+/* contact pg */
+.contact-bx {
+    border: 1 px rgb(0, 0, 0);
+    padding: 150px;
+    padding-bottom: 180px;
+    box-shadow: 10px solid red;
+    background-color: rgb(204, 204, 246);
+}
+
+.Contact {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.Contact-para {
+    font-size: 20px;
+    padding-top: 10px;
+
+}
+
+.Phone {
+    font-size: 25px;
+    font-weight: bold;
+    padding-top: 30px;
+}
+
+.Phone-no {
+    font-size: 18px;
+
+}
+
+.Email {
+    font-size: 25px;
+    font-weight: bold;
+    padding-top: 30px;
+
+}
+
+.Email-address {
+    font-size: 18px;
+
+}
+
+.input1 {
+    padding-bottom: 30px;
+}
+
+.input {
+    border-radius: none;
+    padding-right: 50px;
+    padding-bottom: 9px;
+
+
+}
+
+.abc {
+    background-color: rgb(78, 90, 141);
+    padding: 59px 49px 59px 49px;
+    border: 1px solid black;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* footer */
+.footer {
+    background-color: rgb(39, 62, 84);
+    color: rgb(168, 168, 171);
+    padding: 0px 10px 0px 10px;
+}
+
+.footer-heading {
+    font-size: 25px;
+    font-weight: bold;
+    padding: 60px 0px 20px 0px;
+    color: white;
+}
+
+.Careers:hover {
+    color: white;
+}
+
+.About-us:hover {
+    color: white;
+}
+
+.For-partners:hover {
+    color: white;
+}
+
+.Terms:hover {
+    color: white;
+}
+
+.Annual-return:hover {
+    color: white;
+}
+
+.Privacy-policy:hover {
+    color: white;
+}
+
+.Contact-us:hover {
+    color: white;
+}
+
+.Unsubscribe:hover {
+    color: white;
+}
+
+.Advertisement {
+    padding-bottom: 30px;
+}
+
+.Advertisement:hover {
+    color: white;
+}
+
+.Proptiger:hover {
+    color: white;
+}
+
+.Makan:hover {
+    color: white;
+}
+
+.Modernhouses:hover {
+    color: white;
+}
+
+.co:hover {
+    color: white;
+}
+
+.News:hover {
+    color: white;
+}
+
+.Home-loans:hover {
+    color: white;
+}
+
+.Site-maps:hover {
+    color: white;
+}
+
+.Internationals:hover {
+    color: white;
+}
+
+.News:hover {
+    color: white;
+}
+
+.Follow:hover {
+    color: white;
+
+}
+
+.fb-icon {
+    font-size: 50px;
+}
+
+.fb-icon:hover {
+    font-size: 50px;
+    color: white;
+}
+
+
+.insta-icon {
+    font-size: 50px;
+}
+
+.insta-icon:hover {
+    font-size: 50px;
+    color: white;
+}
+
+.twitter-icon {
+    font-size: 50px;
+}
+
+.twitter-icon:hover {
+    font-size: 50px;
+    color: white;
+}
+
+
+.linkedin-icon {
+    font-size: 50px;
+}
+
+.linkedin-icon:hover {
+    font-size: 50px;
+    color: white;
+}
+
+
+.yt-icon {
+    font-size: 50px;
+}
+
+.yt-icon:hover {
+    font-size: 50px;
+    color: white;
+}
+
+/* about */
+.about-image {
+    height: 300px;
+    /* height: 50%; */
+
+}
+
+.about-image:color-overlay {
+    background-color: rgba(0, 0, 0, .10);
+}
+
+.about-info {
+    padding-top: 60px;
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+}
+
+.about-company {
+    font-size: 20px;
+    padding-top: 20px;
+}
+
+.about-company:hover {
+    text-decoration: underline;
+    transform: scale(110%);
+    color: rgb(255, 0, 0);
+
+}
+
+.about-culture {
+    font-size: 20px;
+    padding-top: 20px;
+}
+
+.about-culture:hover {
+    text-decoration: underline;
+    transform: scale(110%);
+    color: rgb(255, 0, 0);
+
+}
+
+.about-leadership {
+    font-size: 20px;
+    padding-top: 20px;
+    padding-left: 10px;
+}
+
+.about-leadership:hover {
+    text-decoration: underline;
+    transform: scale(110%);
+    color: rgb(255, 0, 0);
+
+}
+
+.about-join-us {
+    font-size: 20px;
+    /* padding: 20px 0px 0px 20px; */
+    padding-top: 20px;
+}
+
+.about-join-us:hover {
+    text-decoration: underline;
+    transform: scale(110%);
+    color: rgb(255, 0, 0);
+}
+
+.about-para {
+    padding-top: 20px;
+    font-size: 18px;
+}
+
+.Our-vision {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+.Our-vision-para {
+    padding-top: 10px;
+    padding-bottom: 50px;
+    font-size: 18px;
+    text-align: center;
+}
+
+.Mission {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+.Mission-para {
+    padding-top: 10px;
+    font-size: 18px;
+    text-align: center;
+    padding-bottom: 90px;
+}
+
+.Perfect {
+    text-align: center;
+    font-size: 35px;
+    font-weight: bold;
+    padding-top: 50px;
+}
+
+.Perfect-para {
+    padding-top: 10px;
+    font-size: 18px;
+    text-align: center;
+    padding-bottom: 90px;
+}
+
+
+/* testimonials */
+.Timeline {
+    text-align: center;
+    font-size: 4rem;
+    font-weight: bold;
+    padding: 20px 0px 30px 0px;
+}
+
+.first-testimonial {
+    font-size: 20px;
+    font-weight: bold;
+    /* padding-bottom: 5px; */
+}
+
+.testimonial-year {
+
+    text-align: right;
+}
+
+.first-testimonial-date {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.Year {
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    padding: 15px 10px 15px 10px;
+}
+
+.first-testimonial-para {
+    padding-top: 20px;
+    font-size: 16px;
+    padding-bottom: 50px;
+}
+
+.copyright {
+    padding: 10px 0 0 0;
+}
+
+.copyright:hover {
+    color: white;
+    font-size: 20px;
+}
+
+
+
+
+
+/* Start Mobile view */
+
+@media all and (min-width: 577px) {}
+
+
+@media all and (max-width: 576px) {
+    .Modern-houses-home-pg {
+        padding: 50px 0px 0px 0px;
+        color: rgb(250, 247, 247);
+        font-size: 4rem;
+        font-weight: bold;
+    }
+
+    /* .footer_md {
+        font-size: 25px;
+        font-weight: bold;
+        padding: 60px 0px 20px 0px;
+        color: white;
+    } */
+    .Modern-houses {
+        color: white;
+        font-size: 2rem;
+        font-weight: bold;
+    }
+
+    .rooms {
+        font-size: 20px;
+        color: rgb(255, 255, 255);
+        padding: 0px 0px 0px 30px;
+    }
+
+    .arrow {
+        padding: 20px 0px 0px 1135px;
+        color: white;
+    }
+
+    .left-arrow {
+        padding: 10px;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 20px;
+    }
+
+    .right-arrow {
+        padding: 10px;
+        border: 1px solid rgb(255, 255, 255);
+        border-radius: 20px;
+    }
+
+    .temperature {
+        padding: 10px 0px 0px 50px;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    .footer-heading {
+        font-size: 25px;
+        font-weight: bold;
+        padding: 60px 0px 20px 0px;
+        color: white;
+        text-align: center;
+    }
+
+    .map {
+        width: 100%;
+        /* height: 380px; */
+        /* height: 40%; */
+    }
+
+    .footer {
+        background-color: rgb(39, 62, 84);
+        color: rgb(168, 168, 171);
+        padding: 0px 10px 0px 10px;
+    }
+
+    .footer-heading {
+        font-size: 25px;
+        font-weight: bold;
+        padding: 60px 0px 20px 0px;
+    }
+
+    .Careers {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .About-us {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .For-partners {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Terms {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Annual-return {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Privacy-policy {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Contact-us {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Unsubscribe {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Advertisement {
+        padding-bottom: 30px;
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Advertisement {
+        font-size: 25px;
+        text-align: center;
+
+
+    }
+
+    .Proptiger {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Makan {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    /*     
+    .Modernhouses{
+        font-size: 25px;
+        text-align: center;
+
+    } */
+
+    .co {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Modernhouses {
+        font-size: 25px;
+        text-align: center;
+    }
+
+    .News {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .Home-loans {
+        font-size: 25px;
+        text-align: center;
+
+
+    }
+
+    .Site-maps {
+        font-size: 25px;
+        text-align: center;
+
+
+    }
+
+    .Internationals {
+        font-size: 25px;
+        text-align: center;
+
+
+    }
+
+    .News {
+        font-size: 25px;
+        text-align: center;
+
+
+    }
+
+    .Follow {
+        font-size: 25px;
+        text-align: center;
+
+
+    }
+
+    .fb-icon {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .fb-icon {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+
+    .insta-icon {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .insta-icon {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .twitter-icon {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .twitter-icon {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+
+    .linkedin-icon {
+        font-size: 25px;
+        text-align: center;
+
+    }
+
+    .linkedin-icon {
+        font-size: 25px;
+    }
+
+
+    .yt-icon {
+        font-size: 25px;
+        text-align: center;
+
+
+    }
+
+    .fb-icon-mb {
+        text-align: center;
+    }
+
+    .copyright {
+        color: white;
+        font-size: 22px;
+        text-align: center;
+
+    }
+
+    .about-info {
+        padding-top: 60px;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    .about-para {
+        padding-top: 20px;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .Our-vision {
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        padding-top: 50px;
+    }
+
+    .Our-vision-para {
+        padding-top: 10px;
+        padding-bottom: 50px;
+        font-size: 18px;
+        text-align: center;
+    }
+
+    .Mission {
+        text-align: center;
+        font-size: 25px;
+        font-weight: bold;
+        padding-top: 50px;
+    }
+
+    .Mission-para {
+        padding-top: 10px;
+        font-size: 18px;
+        text-align: center;
+        padding-bottom: 90px;
+    }
+
+    .Perfect {
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+        padding-top: 50px;
+    }
+
+    .Perfect-para {
+        padding-top: 10px;
+        font-size: 18px;
+        text-align: center;
+        padding-bottom: 90px;
+    }
+
+    .info-row {
+        padding: 250px 0px 100px 0px;
+    }
+
+    .map {
+        width: 100%;
+        /* height: 380px; */
+        /* height: 400px; */
+        /* left: 25%; */
+        padding-top: 420px;
+    }
+
+    .first-testimonial-date {
+        font-size: 20px;
+        font-weight: bold;
+        padding-top: 40px;
+    }
+
+    .first-testimonial {
+        font-size: 18px;
+        font-weight: bold;
+        /* padding-bottom: 5px; */
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
+@media (min-width: 577px) {
+    html {
+        font-size: 40%;
+    }
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 45%;
+    }
+
+
+
+}
+
+@media (min-width: 992px) {
+    html {
+        font-size: 60%;
+    }
+}
+
+
+@media (min-width: 1200px) {
+    html {
+        font-size: 80%;
+    }
+}
+
+@media (min-width: 1920px) {
+    html {
+        font-size: 100%;
+    }
+}
+
+/* End Mobile Views */

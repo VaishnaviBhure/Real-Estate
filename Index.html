@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate</title>
+    <!-- css -->
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="demo1.css">
+    <!-- css cdn link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+
+    <!-- js cdn link -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js">
+
+
+    <!-- style-guide-css -->
+    <link rel="stylesheet" href="../style-guide.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <!-- fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+        rel="stylesheet">
+
+
+
+
+    <style>
+        button:focus,
+        .navbar-toggler:focus {
+            outline: 0;
+            box-shadow: none;
+        }
+
+        .Modern-houses {
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+
+        .menu_wrapper {
+            background-color: rgb(27, 57, 102);
+            padding: 15px 0px;
+        }
+
+        .menu_wrapper .manu-brand {
+            font-size: 40px;
+            font-weight: 700px;
+            color: black;
+            -webkit-text-stroke: white 1px;
+            /* webkit for chrome and safari */
+        }
+
+        /* .menu_wrapper .manu-brand:hover {
+            color: rgb(97, 5, 5);
+        } */
+
+        .menu_wrapper .navbar-nav .nav-item {
+            margin: 0 10px;
+
+        }
+
+        .menu_wrapper .navbar-nav .nav-link {
+            font-size: 16px;
+            font-weight: 400px;
+            color: white;
+            display: inline-block;
+        }
+
+        .menu_wrapper .dropdown-menu .dropdown-item {
+            margin-bottom: 10px;
+        }
+
+        .menu_wrapper .dropdown-menu .dropdown-item:hover {
+            background-color: rgb(222, 250, 253);
+        }
+
+        .menu_wrapper .dropdown-menu .list-group-item:hover {
+            /* background-color: rgb(49, 120, 128); */
+            background-color: rgb(199, 213, 213);
+            color: rgb(0, 0, 0);
+            padding-left: 30px;
+            /* text-shadow: white; */
+        }
+
+        .menu_wrapper .dropdown-mega .dropdown-menu {
+            width: 100%;
+        }
+
+        /* .menu_wrapper .dropdown-mega h5 {
+            padding-bottom: 120px;
+            border-bottom: 1px solid red;
+            margin: 0;
+        } */
+
+        .menu_wrapper .list-group-item {
+            font-size: 16px;
+            color: black;
+            border: 0px;
+            border-bottom: 1px solid rgba(0, 0, 0, .125);
+            padding: 12px 0;
+
+        }
+
+        .menu_wrapper .btn {
+            background-color: rgb(184, 168, 149);
+            /* padding-left: 20px; */
+        }
+
+        @media (max-width:991px) {
+            .menu_wrapper .navbar-brand {
+                font-size: 30px;
+            }
+
+            .menu_wrapper .navbar-nav .nav-item {
+                margin: 5px 10px;
+            }
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="menu_wrapper">
+        <nav class="navbar navbar-expand-lg ">
+            <div class="container-fluid">
+                <a class="navbar-brand Modern-houses" href="#"><i class="bi bi-house-door-fill"></i>Vihar Valley</a>
+
+                <button class="navbar-toggler " type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                    <i class="fa fa-stream navbar-toggler-icon three-bar"></i>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="about.html">About</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="Testimonials.html">Testimonial</a>
+
+                        </li>
+                        <li class="nav-item dropdown dropdown-mega position-static">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+                                Survices
+                            </a>
+                            <div class="dropdown-menu shadow">
+                                <div class="mega-content px-md-4">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-sm-6 py-4 px-xl-5x px-4">
+                                                <h4>Rent Services</h4>
+                                                <div class="list-group">
+                                                    <a class="list-group-item" href="">Pay rent with credit card</a>
+                                                    <a class="list-group-item" href="">Rent agreement</a>
+                                                    <a class="list-group-item" href="">Generate Rent Reciept</a>
+                                                    <a class="list-group-item" href="">Tenate Varification</a>
+                                                    <a class="list-group-item" href="">Office Leasing Varification</a>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-6 py-4 px-xl-5x px-4">
+                                                <h4>Buy/Sell Services</h4>
+                                                <div class="list-group">
+                                                    <a class="list-group-item" href="">Property Valuation</a>
+                                                    <a class="list-group-item" href="">Legal Title Check</a>
+                                                    <a class="list-group-item" href="">Property Lawyers</a>
+                                                    <a class="list-group-item" href="">Home Inspection</a>
+                                                    <a class="list-group-item" href="">Vastu</a>
+                                                    <a class="list-group-item" href="">Design & Decor</a>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-6 py-4 px-xl-5x px-4">
+                                                <h4>Home Services</h4>
+                                                <div class="list-group">
+                                                    <a class="list-group-item" href="">Packers & Movers</a>
+                                                    <a class="list-group-item" href="">Home Cleaning</a>
+                                                    <a class="list-group-item" href="">Pest Control</a>
+                                                    <a class="list-group-item" href="">Sanitization</a>
+                                                    <a class="list-group-item" href="">View all Services</a>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-3 col-sm-6 py-4 px-xl-5x px-4">
+                                                <h4>Services</h4>
+                                                <div class="list-group">
+                                                    <a class="list-group-item" href="">Accomodations</a>
+                                                    <a class="list-group-item" href="">pvt ltd</a>
+                                                    <a class="list-group-item" href="">Privacy</a>
+                                                    <a class="list-group-item" href="">terms and conditions</a>
+                                                    <a class="list-group-item" href="">lorum</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="Contactpg.html">Contact Us</a>
+                        </li>
+                        <!-- </ul>
+                    <form class="d-flex">
+                        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success" type="submit">Search</button>
+                    </form> -->
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="view"
+        style="background-image:url(img/bg.png ) ; background-repeat: no-repeat; background-size: cover; background-position: center center;">
+        <div class="mask rgba-gradient d-flex justify-content-center align-items-center">
+            <div class="container-fluid">
+                <div class="row ">
+                    <div class=" col-sm-8 col-md-8"></div>
+                    <div class="col-12 col-sm-4 col-md-4 Modern-houses-home-pg">Vihar Valley</div>
+                </div>
+                <div class="row">
+                    <div class=" col-sm-8 col-md-8"></div>
+                    <div class="col-12 col-sm-4 col-md-4 rooms">3 bedrooms, 1 kitchen, 1 bathroom</div>
+                </div>
+                <div class="row">
+                    <div class=" col-sm-8 col-md-8"></div>
+                    <div class="col-12 col-sm-4 col-md-4 temperature">42 &#x2103; very hot</div>
+                </div>
+                <div class="row">
+                    <div class="  col-sm-8 col-md-8"></div>
+                    <div class="col-12 col-sm-4 col-md-4 arrow"><i class="fa fa-arrow-left left-arrow"
+                            aria-hidden="true"></i>
+                        <i class="fa fa-arrow-right right-arrow" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="row info-row">
+                    <div class="  col-sm-2 col-md-2"></div>
+                    <div class="col-12  col-sm-12 col-md-8 information-bx1">
+                        <div class="row">
+                            <div class="col-12 col-sm-12  col-md-3 City-heading">
+                                <div class="row">
+                                    <div class="col-sm-12  col-md-12 City">City</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12  col-md-12 City-name">Nagpur</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12  col-md-12 City-place">Maharashtra, India</div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-6  col-md-3 people-heading">
+                                <div class="row">
+                                    <div class="col-sm-12  col-md-12 ">People</div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12  col-md-12 ">
+                                        <input type="text" value="4 People" id="people">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-4  col-md-6 ">
+                                        <button id="people_less">less</button>
+                                    </div>
+                                    <div class="col-sm-6  col-md-6 ">
+                                        <button id="people_more">more</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-sm-6  col-md-6 checking-bx">
+                                <div class="row">
+                                    <div class="col-12 col-sm-12  col-md-6">
+                                        <div class="row">
+                                            <div class="col-sm-6  col-md-12 check_in">Check In</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6  col-md-12 today_date">Sat, 5 Jan<i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-  col-md-4 "> <button id="yesterday">Less</button></div>
+                                            <div class="col-sm-  col-md-8 "> <button id="tomorrow">more</button></div>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-sm-6  col-md-6">
+                                        <div class="row">
+                                            <div class=" col-sm-6  col-md-12 check_out">Check Out</div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-6  col-md-12 tomorrow_date">Sat, 6 Jan<i
+                                                    class="fa fa-calendar" aria-hidden="true"></i></div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-sm-4  col-md-4 "> <button id="yesterday">Less</button></div>
+                                            <div class="col-sm-8  col-md-8 "> <button id="tomorrow">more</button></div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-2"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="map">
+                        <iframe src="https://my.atlistmaps.com/map/c7ed52ef-ed85-40d8-9c10-f55b1d484ca9?share=true"
+                            allow="geolocation" width="100%" height="400px" frameborder="0" scrolling="no"
+                            allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row footer">
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="row">
+                    <div class="col-12 col-sm-12 col-md-12 ">
+                        <div class="row footer-heading">
+                            <div class="col-sm-12 col-md-12">COMPANY</div>
+                        </div>
+                        <div class="row Careers">
+                            <div class="col-sm-12 col-md-12">Careers</div>
+                        </div>
+                        <div class="row About-us">
+                            <div class="col-sm-12 col-md-12">About Us</div>
+                        </div>
+                        <div class="row For-partners">
+                            <div class="col-sm-12 col-md-12">For Partners</div>
+                        </div>
+                        <div class="row Terms">
+                            <div class="col-sm-12 col-md-12">Terms</div>
+                        </div>
+                        <div class="row Annual-return">
+                            <div class="col-sm-12 col-md-12">Annual Return</div>
+                        </div>
+                        <div class="row Privacy-policy">
+                            <div class="col-sm-12 col-md-12">Privacy Policy</div>
+                        </div>
+                        <div class="row Contact-us">
+                            <div class="col-sm-12 col-md-12">Contact Us</div>
+                        </div>
+                        <div class="row Unsubscribe">
+                            <div class="col-sm-12 col-md-12">Unsubscribe</div>
+                        </div>
+                        <div class="row Advertisement">
+                            <div class="col-sm-12 col-md-12">Mergal Hearing Advertisement</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row footer-heading">
+                            <div class="col-md-12">PARTNER SITES</div>
+                        </div>
+                        <div class="row Proptiger">
+                            <div class="col-md-12">Proptiger</div>
+                        </div>
+                        <div class="row Makan">
+                            <div class="col-md-12">Makan</div>
+                        </div>
+                        <div class="row Modernhouses">
+                            <div class="col-md-12">Modernhouses.com</div>
+                        </div>
+                        <div class="row co">
+                            <div class="col-md-12">99.co</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row footer-heading">
+                            <div class="col-md-12">EXPLORE</div>
+                        </div>
+                        <div class="row News">
+                            <div class="col-md-12">News</div>
+                        </div>
+                        <div class="row Home-loans">
+                            <div class="col-md-12">Home Loans</div>
+                        </div>
+                        <div class="row Site-maps">
+                            <div class="col-md-12">Site Maps</div>
+                        </div>
+                        <div class="row Internationals">
+                            <div class="col-md-12">Internationals</div>
+                        </div>
+                        <div class="row News">
+                            <div class="col-md-12">News</div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6 col-md-3">
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="row footer-heading">
+                            <div class="col-md-12">FOLLOW</div>
+                        </div>
+                        <div class="row Follow">
+                            <div class="col-md-12">Follow Us On </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2 fb-icon-mb "><i class="fa fa-facebook-official fb-icon"></i></div>
+                            <div class="col-md-2 fb-icon-mb "><i class="fa fa-instagram  insta-icon "></i></div>
+                            <div class="col-md-2 fb-icon-mb "><i class="fa fa-twitter-square  twitter-icon "></i></div>
+                            <div class="col-md-2 fb-icon-mb "><i class="fa fa-linkedin-square   linkedin-icon"></i>
+                            </div>
+                            <div class="col-md-2 fb-icon-mb "><i class="fa fa-youtube-play  yt-icon "></i></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12 copyright"><i class="fa fa-copyright" aria-hidden="true"></i>2013-2023
+                                Locon Solutions Pvt Ltd</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
